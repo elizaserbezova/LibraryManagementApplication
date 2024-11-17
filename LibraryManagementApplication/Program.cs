@@ -1,6 +1,8 @@
 using LibraryManagementApplication.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using LibraryManagementApplication.Services.Mapping;
+using LibraryManagementApplication.ViewModels;
 
 namespace LibraryManagementApplication
 {
@@ -9,6 +11,8 @@ namespace LibraryManagementApplication
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).Assembly);
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
