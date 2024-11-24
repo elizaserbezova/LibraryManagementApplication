@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementApplicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementApplication.Services.Mapping", "LibraryManagementApplication.Services.Mapping\LibraryManagementApplication.Services.Mapping.csproj", "{B4A41F59-3258-4345-8D88-20DCFB30A1F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryManagementApplication.Infrastructure", "LibraryManagementApplication.Infrastructure\LibraryManagementApplication.Infrastructure.csproj", "{EA54306E-2E22-44D7-95AB-1CC1209F98E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{B4A41F59-3258-4345-8D88-20DCFB30A1F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4A41F59-3258-4345-8D88-20DCFB30A1F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4A41F59-3258-4345-8D88-20DCFB30A1F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA54306E-2E22-44D7-95AB-1CC1209F98E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA54306E-2E22-44D7-95AB-1CC1209F98E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA54306E-2E22-44D7-95AB-1CC1209F98E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA54306E-2E22-44D7-95AB-1CC1209F98E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{D44AAB72-C3D2-476C-A825-2DCB57704E90} = {4F129045-A106-4FB5-BE69-05F77FF09F44}
 		{F4D3C04F-BD41-4B15-A895-D4127E8B6DDA} = {A3BA0CED-D3ED-4034-93BE-2450376EF3B6}
 		{B4A41F59-3258-4345-8D88-20DCFB30A1F8} = {A3BA0CED-D3ED-4034-93BE-2450376EF3B6}
+		{EA54306E-2E22-44D7-95AB-1CC1209F98E3} = {4F129045-A106-4FB5-BE69-05F77FF09F44}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FB7700C-6353-463D-947F-0369FC1C1B19}

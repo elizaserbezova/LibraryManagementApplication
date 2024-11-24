@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\LibraryManagementApplication.Common\LibraryManagementApplication.Common.csproj" />
     <ProjectReference Include="..\LibraryManagementApplication.Data.Models\LibraryManagementApplication.Data.Models.csproj" />
     <ProjectReference Include="..\LibraryManagementApplication.Data\LibraryManagementApplication.Data.csproj" />
+    <ProjectReference Include="..\LibraryManagementApplication.Services.Mapping\LibraryManagementApplication.Services.Mapping.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LibraryManagementApplication.Common\LibraryManagementApplication.Common.csproj" />
+    <ProjectReference Include="..\LibraryManagementApplication.Data.Models\LibraryManagementApplication.Data.Models.csproj" />
+    <ProjectReference Include="..\LibraryManagementApplication.Data\LibraryManagementApplication.Data.csproj" />
+    <ProjectReference Include="..\LibraryManagementApplication.Infrastructure\LibraryManagementApplication.Infrastructure.csproj" />
+    <ProjectReference Include="..\LibraryManagementApplication.Services.Mapping\LibraryManagementApplication.Services.Mapping.csproj" />
+    <ProjectReference Include="..\LibraryManagementApplication.ViewModels\LibraryManagementApplication.ViewModels.csproj" />
+  </ItemGroup>
+
 </Project>
