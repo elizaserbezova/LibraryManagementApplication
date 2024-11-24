@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementApplication.Services.Mapping;
 using LibraryManagementApplication.ViewModels;
+using LibraryManagementApplication.Data.Repository.Interfaces;
+using LibraryManagementApplication.Data.Repository;
+using LibraryManagementApplication.Data.Models;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace LibraryManagementApplication
 {
@@ -23,6 +27,12 @@ namespace LibraryManagementApplication
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IRepository<Book, int>, Repository<Book, int>>();
+            builder.Services.AddScoped<IRepository<Author, int>, Repository<Author, int>>();
+            builder.Services.AddScoped<IRepository<Member, int>, Repository<Member, int>>();
+            builder.Services.AddScoped<IRepository<Genre, int>, Repository<Genre, int>>();
+            builder.Services.AddScoped<IRepository<LendingRecord, int>, Repository<LendingRecord, int>>();
 
             var app = builder.Build();
 

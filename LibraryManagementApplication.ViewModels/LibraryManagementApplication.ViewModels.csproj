@@ -17,4 +17,8 @@
     <ProjectReference Include="..\LibraryManagementApplication.Services.Mapping\LibraryManagementApplication.Services.Mapping.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Books\" />
+  </ItemGroup>
+
 </Project>
