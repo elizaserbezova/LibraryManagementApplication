@@ -1,48 +1,77 @@
 ﻿using LibraryManagementApplication.Data;
 using LibraryManagementApplication.Data.Models;
+using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Services.Data.Interfaces;
-using LibraryManagementApplication.ViewModels.Books;
 
 namespace LibraryManagementApplication.Services.Data
 {
     public class BookService : IBookService
     {
-        private readonly ApplicationDbContext dbContext;
+        private readonly IBookRepository _bookRepository;
 
-        public BookService(ApplicationDbContext _dbContext)
+        public BookService(IBookRepository repository)
         {
-            this.dbContext = _dbContext;
+            _bookRepository = repository;
         }
 
-        public async Task AddBookAsync(BookViewModel bookData)
+        public void AddBook(Book book)
         {
-            Book book = new Book()
-            {
-                Title = bookData.Title,
-                AuthorId = bookData.Author,
-
-            }
-
+            _bookRepository.Add(book);
         }
 
-        public Task DeleteBookAsync(int id)
+        public async Task AddBookAsync(Book book)
         {
-            throw new NotImplementedException();
+            await _bookRepository.AddAsync(book);
         }
 
-        public Task<List<BookViewModel>> GetAllBooksAsync()
+        public IEnumerable<Book> GetAllBooks()
         {
-            throw new NotImplementedException();
+            return _bookRepository.GetAll();
         }
 
-        public Task<BookViewModel> GetBookByIdAsync(int id)
+        public async Task<IEnumerable<Book>> GetAllBooksAsync()
         {
-            throw new NotImplementedException();
+            return await _bookRepository.GetAllAsync();
         }
 
-        public Task UpdateBookAsync(BookViewModel bookDto)
+        public Book GetBookById(int id)
         {
-            throw new NotImplementedException();
+            return _bookRepository.GetById(id);
+        }
+
+        public async Task<Book> GetBookByIdAsync(int id)
+        {
+            return await _bookRepository.GetByIdAsync(id);
+        }
+
+        public bool UpdateBook(Book book)
+        {
+            return _bookRepository.Update(book);
+        }
+
+        public async Task<bool> UpdateBookAsync(Book book)
+        {
+            return await _bookRepository.UpdateAsync(book);
+        }
+
+        public bool DeleteBook(int id)
+        {
+            return _bookRepository.Delete(id);
+        }
+
+        public async Task<bool> DeleteBookAsync(int id)
+        {
+            return await _bookRepository.DeleteAsync(id);
+        }
+
+        public IEnumerable<Book> GetBooksByAuthor(int authorId)
+        {
+            return _bookRepository.GetBooksByAuthor(authorId);
+        }
+
+        public async Task<IEnumerable<Book>> GetBooksByGenreAsync(int genreId)
+        {
+            return await _bookRepository.GetBooksByGenreAsync(genreId);
         }
     }
 }

@@ -2,11 +2,16 @@ using LibraryManagementApplication.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementApplication.Services.Mapping;
+using LibraryManagementApplication.Services.D
+
+
 using LibraryManagementApplication.ViewModels;
 using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Data.Repository;
 using LibraryManagementApplication.Data.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
+using LibraryManagementApplication.Services.Data.Interfaces;
+using LibraryManagementApplication.Services.Data;
 
 namespace LibraryManagementApplication
 {
@@ -33,6 +38,9 @@ namespace LibraryManagementApplication
             builder.Services.AddScoped<IRepository<Member, int>, Repository<Member, int>>();
             builder.Services.AddScoped<IRepository<Genre, int>, Repository<Genre, int>>();
             builder.Services.AddScoped<IRepository<LendingRecord, int>, Repository<LendingRecord, int>>();
+
+            builder.Services.AddScoped<IBookRepository, BookRepository>();
+            builder.Services.AddScoped<IBookService, BookService>();
 
             var app = builder.Build();
 
