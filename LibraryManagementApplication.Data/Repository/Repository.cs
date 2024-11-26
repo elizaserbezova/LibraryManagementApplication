@@ -6,8 +6,8 @@ namespace LibraryManagementApplication.Data.Repository
     public class Repository<TType, TId> : IRepository<TType, TId>
         where TType : class
     {
-        private readonly ApplicationDbContext dbContext;
-        private readonly DbSet<TType> dbSet;
+        protected readonly ApplicationDbContext dbContext;
+        protected readonly DbSet<TType> dbSet;
 
         public Repository(ApplicationDbContext _dbContext)
         {

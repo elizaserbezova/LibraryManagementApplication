@@ -1,17 +1,21 @@
-﻿using LibraryManagementApplication.Data;
+﻿using AutoMapper;
+using LibraryManagementApplication.Data;
 using LibraryManagementApplication.Data.Models;
 using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Services.Data.Interfaces;
+using LibraryManagementApplication.ViewModels;
 
 namespace LibraryManagementApplication.Services.Data
 {
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IMapper _mapper;
 
-        public BookService(IBookRepository repository)
+        public BookService(IBookRepository repository, IMapper mapper)
         {
             _bookRepository = repository;
+            _mapper = mapper;
         }
 
         public void AddBook(Book book)
@@ -19,8 +23,9 @@ namespace LibraryManagementApplication.Services.Data
             _bookRepository.Add(book);
         }
 
-        public async Task AddBookAsync(Book book)
+        public async Task AddBookAsync(BookViewModel bookViewModel)
         {
+            var book = _mapper.Map<Book>(bookViewModel);
             await _bookRepository.AddAsync(book);
         }
 
@@ -29,9 +34,10 @@ namespace LibraryManagementApplication.Services.Data
             return _bookRepository.GetAll();
         }
 
-        public async Task<IEnumerable<Book>> GetAllBooksAsync()
+        public async Task<IEnumerable<BookViewModel>> GetAllBooksAsync()
         {
-            return await _bookRepository.GetAllAsync();
+            var books = await _bookRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<BookViewModel>>(books);
         }
 
         public Book GetBookById(int id)
@@ -39,9 +45,10 @@ namespace LibraryManagementApplication.Services.Data
             return _bookRepository.GetById(id);
         }
 
-        public async Task<Book> GetBookByIdAsync(int id)
+        public async Task<BookViewModel?> GetBookByIdAsync(int id)
         {
-            return await _bookRepository.GetByIdAsync(id);
+            var book = await _bookRepository.GetByIdAsync(id);
+            return _mapper.Map<BookViewModel>(book);
         }
 
         public bool UpdateBook(Book book)
@@ -49,8 +56,9 @@ namespace LibraryManagementApplication.Services.Data
             return _bookRepository.Update(book);
         }
 
-        public async Task<bool> UpdateBookAsync(Book book)
+        public async Task<bool> UpdateBookAsync(BookViewModel bookViewModel)
         {
+            var book = _mapper.Map<Book>(bookViewModel);
             return await _bookRepository.UpdateAsync(book);
         }
 
@@ -64,14 +72,22 @@ namespace LibraryManagementApplication.Services.Data
             return await _bookRepository.DeleteAsync(id);
         }
 
-        public IEnumerable<Book> GetBooksByAuthor(int authorId)
+        public async Task<IEnumerable<BookViewModel>> GetBooksByAuthorAsync(int authorId)
         {
-            return _bookRepository.GetBooksByAuthor(authorId);
+            var books = await _bookRepository.GetBooksByAuthorAsync(authorId);
+            return _mapper.Map<IEnumerable<BookViewModel>>(books);
         }
 
-        public async Task<IEnumerable<Book>> GetBooksByGenreAsync(int genreId)
+        public async Task<IEnumerable<BookViewModel>> GetBooksByGenreAsync(int genreId)
         {
-            return await _bookRepository.GetBooksByGenreAsync(genreId);
+            var books = await _bookRepository.GetBooksByGenreAsync(genreId);
+            return _mapper.Map<IEnumerable<BookViewModel>>(books);
+        }
+
+        public async Task<IEnumerable<BookViewModel>> GetAvailableBooksAsync()
+        {
+            var books = await _bookRepository.GetAvailableBooksAsync();
+            return _mapper.Map<IEnumerable<BookViewModel>>(books);
         }
     }
 }

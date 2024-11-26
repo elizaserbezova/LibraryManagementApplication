@@ -9,7 +9,8 @@ namespace LibraryManagementApplication.Data.Repository.Interfaces
 {
     public interface IBookRepository : IRepository<Book, int>
     {
-        IEnumerable<Book> GetBooksByAuthor(int authorId);
+        Task<IEnumerable<Book>> GetAvailableBooksAsync();
+        Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId);
         Task<IEnumerable<Book>> GetBooksByGenreAsync(int genreId);
     }
 }

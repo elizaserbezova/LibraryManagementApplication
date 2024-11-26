@@ -1,9 +1,6 @@
 using LibraryManagementApplication.Data;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using LibraryManagementApplication.Services.Mapping;
-using LibraryManagementApplication.Services.D
-
 
 using LibraryManagementApplication.ViewModels;
 using LibraryManagementApplication.Data.Repository.Interfaces;
@@ -12,6 +9,7 @@ using LibraryManagementApplication.Data.Models;
 using Microsoft.EntityFrameworkCore.Migrations;
 using LibraryManagementApplication.Services.Data.Interfaces;
 using LibraryManagementApplication.Services.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace LibraryManagementApplication
 {
@@ -41,6 +39,8 @@ namespace LibraryManagementApplication
 
             builder.Services.AddScoped<IBookRepository, BookRepository>();
             builder.Services.AddScoped<IBookService, BookService>();
+
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();
 

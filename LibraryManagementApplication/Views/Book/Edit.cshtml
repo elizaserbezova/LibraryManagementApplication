@@ -1,0 +1,57 @@
+﻿@model BookViewModel
+
+@{
+    ViewData["Title"] = "Edit Book";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="BookId" />
+            <div class="row">
+                <div class="col-sm-6 mb-2">
+                    <label asp-for="@Model.Title" class="form-label-add-edit">Book Title</label>
+                    <input asp-for="@Model.Title" class="form-control" aria-required="true" />
+                    <span asp-validation-for="@Model.Title" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6 mb-2">
+                    <label asp-for="@Model.ISBN" class="form-label-add-edit">ISBN</label>
+                    <input asp-for="@Model.ISBN" class="form-control" aria-required="true" />
+                    <span asp-validation-for="@Model.ISBN" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6 mb-2">
+                    <label asp-for="@Model.PublishDate" class="form-label-add-edit">Publish Date</label>
+                    <input asp-for="@Model.PublishDate" class="form-control" type="date" />
+                    <span asp-validation-for="@Model.PublishDate" class="text-danger"></span>
+                </div>
+                <div class="col-sm-6 mb-2">
+                    <label asp-for="@Model.AuthorId" class="form-label-add-edit">Author</label>
+                    <select asp-for="@Model.AuthorId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Authors, "AuthorId", "Name"))">
+                        <option value="">Select Author...</option>
+                    </select>
+                    <span asp-validation-for="@Model.AuthorId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label asp-for="@Model.GenreId" class="form-label-add-edit">Genre</label>
+                <select asp-for="@Model.GenreId" class="form-control" aria-required="true" asp-items="@(new SelectList(Model.Genres, "GenreId", "Name"))">
+                    <option value="">Select Genre...</option>
+                </select>
+                <span asp-validation-for="@Model.GenreId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-2">
+                <input class="btn btn-warning btn-dark-text w-100 py-2 fw-bold rounded" type="submit" value="Save Changes" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -11,21 +11,32 @@ namespace LibraryManagementApplication.Data.Repository
 {
     public class BookRepository : Repository<Book, int>, IBookRepository
     {
-        private readonly ApplicationDbContext dbContext;
+        protected readonly ApplicationDbContext dbContext;
 
         public BookRepository(ApplicationDbContext context) : base(context)
         {
             this.dbContext = context;
         }
 
-        public IEnumerable<Book> GetBooksByAuthor(int authorId)
+        public async Task<IEnumerable<Book>> GetBooksByAuthorAsync(int authorId)
         {
-            return dbContext.Books.Where(book => book.AuthorId == authorId).ToList();
+            return await dbContext.Books
+                .Where(book => book.AuthorId == authorId)
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Book>> GetBooksByGenreAsync(int genreId)
         {
-            return await dbContext.Books.Where(book => book.GenreId == genreId).ToListAsync();
+            return await dbContext.Books
+                .Where(book => book.GenreId == genreId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Book>> GetAvailableBooksAsync()
+        {
+            return await dbContext.Books
+                .Where(book => book.AvailabilityStatus == true)
+                .ToListAsync();
         }
     }
 }

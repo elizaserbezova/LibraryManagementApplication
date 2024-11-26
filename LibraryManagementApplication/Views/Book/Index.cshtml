@@ -1,0 +1,45 @@
+﻿@model IEnumerable<BookViewModel>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<h2>Books</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>ISBN</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Availability</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Title</td>
+                <td>@book.ISBN</td>
+                <td>@book.AuthorName</td>
+                <td>@book.GenreName</td>
+                <td>@(book.AvailabilityStatus ? "Available" : "Unavailable")</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="@Url.Action("Details", "Book", new { id = book.BookId })">Details</a>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-warning btn-sm" href="@Url.Action("Edit", "Book", new { id = book.BookId })">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "Book", new { id = book.BookId })">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-success" href="@Url.Action("Create", "Book")">Add New Book</a>
+}
