@@ -37,8 +37,13 @@ namespace LibraryManagementApplication
             builder.Services.AddScoped<IRepository<Genre, int>, Repository<Genre, int>>();
             builder.Services.AddScoped<IRepository<LendingRecord, int>, Repository<LendingRecord, int>>();
 
+            // BOOKS
             builder.Services.AddScoped<IBookRepository, BookRepository>();
             builder.Services.AddScoped<IBookService, BookService>();
+
+            // AUTHORS
+            builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+            builder.Services.AddScoped<IAuthorService, AuthorService>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
