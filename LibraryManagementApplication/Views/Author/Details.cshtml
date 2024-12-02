@@ -1,0 +1,22 @@
+﻿@model AuthorViewModel
+
+@{
+    ViewData["Title"] = "Author Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="card">
+    <div class="card-header">
+        Author Details
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Name: @Model.Name</h5>
+        <p class="card-text"><strong>Biography:</strong> @Model.Biography</p>
+        <p class="card-text"><strong>Date of Birth:</strong> @(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToString("dd-MM-yyyy") : "N/A")</p>
+        <a class="btn btn-primary" asp-action="Index">Back to List</a>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@model AuthorViewModel
+
+@{
+    ViewData["Title"] = "Delete Author";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-lg-6 offset-lg-3">
+        <form asp-action="DeleteConfirmation" method="post">
+            <input type="hidden" asp-for="AuthorId" />
+            <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a class="btn btn-secondary" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+</div>
