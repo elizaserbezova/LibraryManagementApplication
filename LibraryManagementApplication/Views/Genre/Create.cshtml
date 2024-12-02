@@ -1,0 +1,30 @@
+﻿@model GenreViewModel
+
+@{
+    ViewData["Title"] = "Add Genre";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <form asp-action="Create" method="post">
+            <div class="mb-2">
+                <label asp-for="Name" class="form-label-add-edit">Name</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-2">
+                <label asp-for="Description" class="form-label-add-edit">Description</label>
+                <textarea asp-for="Description" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="mb-2">
+                <input class="btn btn-primary w-100 py-2 fw-bold rounded" type="submit" value="Save" />
+            </div>
+        </form>
+    </div>
+</div>

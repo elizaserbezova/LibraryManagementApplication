@@ -1,0 +1,22 @@
+﻿@model GenreViewModel
+
+@{
+    ViewData["Title"] = "Genre Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3" style="margin-top: 20px;">
+    <h2>@ViewData["Title"]</h2>
+    <a class="btn btn-secondary" asp-action="Index">Back to List</a>
+</div>
+<hr />
+
+<div class="row">
+    <div class="col-sm-12 offset-lg-2 col-lg-8 offset-xl-3 col-xl-6">
+        <dl class="row">
+            <dt class="col-sm-4">Name</dt>
+            <dd class="col-sm-8">@Model.Name</dd>
+            <dt class="col-sm-4">Description</dt>
+            <dd class="col-sm-8">@Model.Description</dd>
+        </dl>
+    </div>
+</div>
