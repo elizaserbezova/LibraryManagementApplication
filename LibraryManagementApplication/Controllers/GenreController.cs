@@ -1,4 +1,6 @@
-﻿using LibraryManagementApplication.Services.Data;
+﻿using AutoMapper;
+using LibraryManagementApplication.Data.Models;
+using LibraryManagementApplication.Services.Data;
 using LibraryManagementApplication.Services.Data.Interfaces;
 using LibraryManagementApplication.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -9,17 +11,20 @@ namespace LibraryManagementApplication.Controllers
     public class GenreController : Controller
     {
         private readonly IGenreService service;
+        private readonly IMapper _mapper;
 
-        public GenreController(IGenreService _service)
+        public GenreController(IGenreService _service, IMapper mapper)
         {
             service = _service;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var genres = await service.GetAllGenresAsync();
-            return View(genres);
+            var genresDb = await service.GetAllGenresAsync();
+            var genresViewModel = _mapper.Map<IEnumerable<GenreViewModel>>(genresDb);
+            return View(genresViewModel);
         }
 
         [HttpGet]
@@ -31,8 +36,8 @@ namespace LibraryManagementApplication.Controllers
             {
                 throw new ArgumentException("Genre not found!");
             }
-
-            return View(genre);
+            var viewModel = _mapper.Map<GenreViewModel>(genre);
+            return View(viewModel);
         }
 
         [Authorize]
@@ -48,7 +53,8 @@ namespace LibraryManagementApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                await service.AddGenreAsync(genreViewModel);
+                var genre = _mapper.Map<Genre>(genreViewModel);
+                await service.AddGenreAsync(genre);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -65,7 +71,8 @@ namespace LibraryManagementApplication.Controllers
             {
                 throw new ArgumentException("Genre not found!");
             }
-            return View(genre);
+            var viewModel = _mapper.Map<GenreViewModel>(genre);
+            return View(viewModel);
         }
 
         [Authorize]
@@ -79,11 +86,12 @@ namespace LibraryManagementApplication.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await service.UpdateGenreAsync(genreViewModel);
+                var genre = _mapper.Map<Genre>(genreViewModel);
+                var result = await service.UpdateGenreAsync(genre);
 
                 if (!result)
                 {
-                    throw new ArgumentException("Genre not found!");
+                    throw new ArgumentException("Genre was not updated!");
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -101,8 +109,8 @@ namespace LibraryManagementApplication.Controllers
             {
                 throw new ArgumentException("Genre not found!");
             }
-
-            return View(genre);
+            var viewModel = _mapper.Map<GenreViewModel>(genre);
+            return View(viewModel);
         }
 
         [Authorize]

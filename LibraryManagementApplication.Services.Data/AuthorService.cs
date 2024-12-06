@@ -9,17 +9,14 @@ namespace LibraryManagementApplication.Services.Data
     public class AuthorService : IAuthorService
     {
         private readonly IAuthorRepository _authorRepository;
-        private readonly IMapper _mapper;
 
-        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
+        public AuthorService(IAuthorRepository authorRepository)
         {
             _authorRepository = authorRepository;
-            _mapper = mapper;
         }
 
-        public async Task AddAuthorAsync(AuthorViewModel viewModel)
+        public async Task AddAuthorAsync(Author author)
         {
-            var author = _mapper.Map<Author>(viewModel);
             await _authorRepository.AddAsync(author);
         }
 
@@ -28,21 +25,20 @@ namespace LibraryManagementApplication.Services.Data
             return await _authorRepository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<AuthorViewModel>> GetAllAuthorsAsync()
+        public async Task<IEnumerable<Author>> GetAllAuthorsAsync()
         {
             var authors = await _authorRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<AuthorViewModel>>(authors);
+            return authors;
         }
 
-        public async Task<AuthorViewModel?> GetAuthorByIdAsync(int id)
+        public async Task<Author?> GetAuthorByIdAsync(int id)
         {
             var author = await _authorRepository.GetByIdAsync(id);
-            return _mapper.Map<AuthorViewModel>(author);
+            return author;
         }
 
-        public async Task<bool> UpdateAuthorAsync(AuthorViewModel viewModel)
+        public async Task<bool> UpdateAuthorAsync(Author author)
         {
-            var author = _mapper.Map<Author>(viewModel);
             return await _authorRepository.UpdateAsync(author);
         }
     }

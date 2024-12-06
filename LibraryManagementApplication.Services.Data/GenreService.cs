@@ -10,17 +10,14 @@ namespace LibraryManagementApplication.Services.Data
     public class GenreService : IGenreService
     {
         IGenreRepository repository;
-        IMapper mapper;
 
-        public GenreService(IGenreRepository _repository, IMapper _mapper)
+        public GenreService(IGenreRepository _repository)
         {
             repository = _repository;
-            mapper = _mapper;
         }
 
-        public async Task AddGenreAsync(GenreViewModel genreViewModel)
+        public async Task AddGenreAsync(Genre genre)
         {
-            var genre = mapper.Map<Genre>(genreViewModel);
             await repository.AddAsync(genre);
         }
 
@@ -29,21 +26,20 @@ namespace LibraryManagementApplication.Services.Data
             return await repository.DeleteAsync(id);
         }
 
-        public async Task<IEnumerable<GenreViewModel>> GetAllGenresAsync()
+        public async Task<IEnumerable<Genre>> GetAllGenresAsync()
         {
             var genres = await repository.GetAllAsync();
-            return mapper.Map<IEnumerable<GenreViewModel>>(genres);
+            return genres;
         }
 
-        public async Task<GenreViewModel?> GetGenreByIdAsync(int id)
+        public async Task<Genre?> GetGenreByIdAsync(int id)
         {
             var genre = await repository.GetByIdAsync(id);
-            return mapper.Map<GenreViewModel>(genre);
+            return genre;
         }
 
-        public async Task<bool> UpdateGenreAsync(GenreViewModel genreViewModel)
+        public async Task<bool> UpdateGenreAsync(Genre genre)
         {
-            var genre = mapper.Map<Genre>(genreViewModel);
             return await repository.UpdateAsync(genre);
         }
     }

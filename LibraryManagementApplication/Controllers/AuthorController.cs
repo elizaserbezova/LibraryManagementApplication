@@ -1,4 +1,6 @@
-﻿using LibraryManagementApplication.Services.Data.Interfaces;
+﻿using AutoMapper;
+using LibraryManagementApplication.Data.Models;
+using LibraryManagementApplication.Services.Data.Interfaces;
 using LibraryManagementApplication.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,16 +10,20 @@ namespace LibraryManagementApplication.Controllers
     public class AuthorController : Controller
     {
         private readonly IAuthorService _authorService;
+        private readonly IMapper _mapper;
 
-        public AuthorController(IAuthorService authorService)
+        public AuthorController(IAuthorService authorService, IMapper mapper)
         {
             _authorService = authorService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var authors = await _authorService.GetAllAuthorsAsync();
+            var authorsDb = await _authorService.GetAllAuthorsAsync();
+            var authors = _mapper.Map<IEnumerable<AuthorViewModel>>(authorsDb);
+
             return View(authors);
         }
 
@@ -34,7 +40,8 @@ namespace LibraryManagementApplication.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _authorService.AddAuthorAsync(viewModel);
+                var author = _mapper.Map<Author>(viewModel);
+                await _authorService.AddAuthorAsync(author);
                 return RedirectToAction(nameof(Index));
             }
             return View(viewModel);
@@ -49,7 +56,9 @@ namespace LibraryManagementApplication.Controllers
             {
                 throw new ArgumentException("Author not found!");
             }
-            return View(author);
+
+            var viewModel = _mapper.Map<AuthorViewModel>(author);
+            return View(viewModel);
         }
 
         [Authorize]
@@ -63,7 +72,8 @@ namespace LibraryManagementApplication.Controllers
 
             if (ModelState.IsValid)
             {
-                await _authorService.UpdateAuthorAsync(viewModel);
+                var author = _mapper.Map<Author>(viewModel);
+                await _authorService.UpdateAuthorAsync(author);
                 return RedirectToAction(nameof(Index));
             }
             return View(viewModel);
@@ -78,7 +88,8 @@ namespace LibraryManagementApplication.Controllers
             {
                 return NotFound();
             }
-            return View(author);
+            var viewModel = _mapper.Map<AuthorViewModel>(author);
+            return View(viewModel);
         }
 
         [Authorize]
