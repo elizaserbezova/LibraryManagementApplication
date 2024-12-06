@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using LibraryManagementApplication.Data.Models;
 
 namespace LibraryManagementApplication.Data.Repository.Interfaces
 {
-    internal interface IGenreRepository
+    public interface IGenreRepository : IRepository<Genre, int>
     {
+
     }
 }

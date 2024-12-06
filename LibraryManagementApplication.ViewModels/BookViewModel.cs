@@ -16,9 +16,9 @@ namespace LibraryManagementApplication.ViewModels
         public string ISBN { get; set; } = null!;
         public DateTime PublishDate { get; set; }
 
-        public string AuthorName { get; set; } = null!;
+        public string? AuthorName { get; set; }
 
-        public string GenreName { get; set; } = null!;
+        public string? GenreName { get; set; }
 
         [Required]
         public int AuthorId { get; set; }

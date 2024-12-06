@@ -4,6 +4,7 @@ using LibraryManagementApplication.Data.Models;
 using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Services.Data.Interfaces;
 using LibraryManagementApplication.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementApplication.Services.Data
 {
@@ -36,7 +37,11 @@ namespace LibraryManagementApplication.Services.Data
 
         public async Task<IEnumerable<BookViewModel>> GetAllBooksAsync()
         {
-            var books = await _bookRepository.GetAllAsync();
+            var books = await _bookRepository
+                .GetAllAsQuery()
+                .Include(b => b.Author)
+                .Include(b => b.Genre)
+                .ToListAsync();
             return _mapper.Map<IEnumerable<BookViewModel>>(books);
         }
 
@@ -47,7 +52,12 @@ namespace LibraryManagementApplication.Services.Data
 
         public async Task<BookViewModel?> GetBookByIdAsync(int id)
         {
-            var book = await _bookRepository.GetByIdAsync(id);
+            var book = await _bookRepository
+                .GetAllAsQuery()
+                .Include(b => b.Author)
+                .Include(b => b.Genre)
+                .FirstOrDefaultAsync(b => b.BookId == id);
+
             return _mapper.Map<BookViewModel>(book);
         }
 

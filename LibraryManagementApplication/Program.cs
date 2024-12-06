@@ -45,6 +45,10 @@ namespace LibraryManagementApplication
             builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
             builder.Services.AddScoped<IAuthorService, AuthorService>();
 
+            // GENRES
+            builder.Services.AddScoped<IGenreRepository, GenreRepository>();
+            builder.Services.AddScoped<IGenreService, GenreService>();
+
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();

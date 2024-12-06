@@ -38,5 +38,10 @@ namespace LibraryManagementApplication.Data.Repository
                 .Where(book => book.AvailabilityStatus == true)
                 .ToListAsync();
         }
+
+        public IQueryable<Book> GetAllAsQuery()
+        {
+            return dbSet.AsQueryable();
+        }
     }
 }

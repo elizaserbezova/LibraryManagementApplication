@@ -9,11 +9,16 @@ namespace LibraryManagementApplication.Controllers
     public class BookController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IAuthorService _authorService;
+        private readonly IGenreService _genreService;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IAuthorService authorService, IGenreService genreService)
         {
-            this._bookService = bookService;
+            _bookService = bookService;
+            _authorService = authorService;
+            _genreService = genreService;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -37,10 +42,13 @@ namespace LibraryManagementApplication.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+            var authors = await _authorService.GetAllAuthorsAsync();
+            var genres = await _genreService.GetAllGenresAsync();
+
             var viewModel = new BookViewModel
             {
-                Authors = new List<Author>(),
-                Genres = new List<Genre>()
+                Authors = authors.ToList(),
+                Genres = genres.ToList(),
             };
 
             return View(viewModel);
@@ -52,8 +60,11 @@ namespace LibraryManagementApplication.Controllers
         {
             if (!ModelState.IsValid)
             {
-                viewModel.Authors = new List<Author>();
-                viewModel.Genres = new List<Genre>();
+                var authors = await _authorService.GetAllAuthorsAsync();
+                var genres = await _genreService.GetAllGenresAsync();
+
+                viewModel.Authors = authors.ToList();
+                viewModel.Genres = genres.ToList();
                 return View(viewModel);
             }
 
@@ -71,6 +82,13 @@ namespace LibraryManagementApplication.Controllers
             {
                 throw new ArgumentException("Book not found!");
             }
+
+            var authors = await _authorService.GetAllAuthorsAsync();
+            var genres = await _genreService.GetAllGenresAsync();
+
+            book.Authors = authors.ToList();
+            book.Genres = genres.ToList();
+
             return View(book);
         }
 

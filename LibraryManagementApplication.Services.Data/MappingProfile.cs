@@ -11,8 +11,11 @@ namespace LibraryManagementApplication.Services.Data
         {
             CreateMap<Book, BookViewModel>()
                 .ForMember(model => model.AuthorName, opt => opt.MapFrom(source => source.Author.Name))
-                .ForMember(model => model.GenreName, opt => opt.MapFrom(source => source.Genre.Name))
-                .ReverseMap();
+                .ForMember(model => model.GenreName, opt => opt.MapFrom(source => source.Genre.Name));
+
+            CreateMap<BookViewModel, Book>()
+                .ForMember(b => b.Author, opt => opt.Ignore())
+                .ForMember(b => b.Genre, opt => opt.Ignore());
         }
     }
 }

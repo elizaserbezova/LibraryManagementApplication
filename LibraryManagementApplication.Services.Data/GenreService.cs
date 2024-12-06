@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using LibraryManagementApplication.Data.Models;
-using LibraryManagementApplication.Data.Repository;
+﻿using LibraryManagementApplication.Data.Models;
 using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Services.Data.Interfaces;
-using LibraryManagementApplication.ViewModels;
 
 namespace LibraryManagementApplication.Services.Data
 {
