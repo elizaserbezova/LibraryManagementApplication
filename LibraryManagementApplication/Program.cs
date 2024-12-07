@@ -28,6 +28,7 @@ namespace LibraryManagementApplication
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
@@ -84,6 +85,57 @@ namespace LibraryManagementApplication
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+
+                var roles = new[] { "Member", "Administrator" };
+
+                foreach (var role in roles)
+                {
+                    bool roleExists = roleManager
+                        .RoleExistsAsync(role)
+                        .GetAwaiter()
+                        .GetResult();
+
+                    if (!roleExists)
+                    {
+                        var roleResult = roleManager
+                            .CreateAsync(new IdentityRole(role))
+                            .GetAwaiter()
+                            .GetResult();
+                    }
+                }
+
+                // SEED ADMIN
+                string adminEmail = "admin@abv.bg";
+                string adminPassword = "Admin1!";
+
+                var adminUser = userManager
+                    .FindByEmailAsync(adminEmail)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (adminUser == null)
+                {
+                    adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+                    var createUserResult = userManager
+                        .CreateAsync(adminUser, adminPassword)
+                        .GetAwaiter()
+                        .GetResult();
+
+                    if (createUserResult.Succeeded)
+                    {
+                        var addToRoleResult = userManager
+                            .AddToRoleAsync(adminUser, "Administrator")
+                            .GetAwaiter()
+                            .GetResult();
+                    }
+                }
+            }
 
             app.Run();
         }

@@ -41,32 +41,36 @@ namespace LibraryManagementApplication.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                var user = await _userManager.GetUserAsync(User);
-                if (user == null)
+                if(!User.IsInRole("Administrator"))
                 {
-                    // User not logged in - redirect to login
-                    return RedirectToPage("/Account/Login");
-                }
-
-                var member = await _memberService.GetMemberByUserIdAsync(user.Id);
-                if (member == null)
-                {
-                    return View("Error", "Member record not found for the logged-in user.");
-                }
-
-                var lendingRecords = await _lendingService.GetMemberLentRecordsAsync(member.MemberId);
-                var userLentBookIds = lendingRecords.Select(r => r.BookId).Distinct().ToList();
-
-                foreach (var book in books)
-                {
-                    var record = lendingRecords
-                        .FirstOrDefault(r => r.BookId == book.BookId && r.ReturnDate == null);
-
-                    if (record != null)
+                    var user = await _userManager.GetUserAsync(User);
+                    if (user == null)
                     {
-                        book.IsLentByUser = true;
-                        book.LendingRecordId = record.LendingRecordId;
+                        // User not logged in - redirect to login
+                        return RedirectToPage("/Account/Login");
                     }
+
+                    var member = await _memberService.GetMemberByUserIdAsync(user.Id);
+                    if (member == null)
+                    {
+                        return View("Error", "Member record not found for the logged-in user.");
+                    }
+
+                    var lendingRecords = await _lendingService.GetMemberLentRecordsAsync(member.MemberId);
+                    var userLentBookIds = lendingRecords.Select(r => r.BookId).Distinct().ToList();
+
+                    foreach (var book in books)
+                    {
+                        var record = lendingRecords
+                            .FirstOrDefault(r => r.BookId == book.BookId && r.ReturnDate == null);
+
+                        if (record != null)
+                        {
+                            book.IsLentByUser = true;
+                            book.LendingRecordId = record.LendingRecordId;
+                        }
+                    }
+
                 }
             }
 
@@ -176,12 +180,12 @@ namespace LibraryManagementApplication.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(int id)
+        public async Task<IActionResult> DeleteConfirmation(int BookId)
         {
-            var result = await _bookService.DeleteBookAsync(id);
+            var result = await _bookService.DeleteBookAsync(BookId);
             if (!result)
             {
-                return NotFound();
+                throw new ArgumentException("Book not found!");
             }
             return RedirectToAction(nameof(Index));
         }
