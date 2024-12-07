@@ -8,5 +8,10 @@ namespace LibraryManagementApplication.Data.Repository
         public LendingRecordRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
+
+        public IQueryable<LendingRecord> GetAllAsQuery()
+        {
+            return dbSet.AsQueryable();
+        }
     }
 }

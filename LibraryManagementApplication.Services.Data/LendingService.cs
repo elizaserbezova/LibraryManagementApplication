@@ -1,6 +1,7 @@
 ﻿using LibraryManagementApplication.Data.Models;
 using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Services.Data.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementApplication.Services.Data
 {
@@ -17,10 +18,11 @@ namespace LibraryManagementApplication.Services.Data
 
         public async Task<IEnumerable<LendingRecord>> GetMemberLentRecordsAsync(int memberId)
         {
-            var allRecords = await _lendingRecordRepository.GetAllAsync();
-            return allRecords
+            return await _lendingRecordRepository
+                .GetAllAsQuery()
                 .Where(r => r.MemberId == memberId && r.ReturnDate == null)
-                .ToList();
+                .Include(r => r.Book)
+                .ToListAsync();
         }
 
         public async Task<bool> IsBookLentOutAsync(int bookId)
