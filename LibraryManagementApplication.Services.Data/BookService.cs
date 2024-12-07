@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LibraryManagementApplication.Data;
 using LibraryManagementApplication.Data.Models;
+using LibraryManagementApplication.Data.Repository;
 using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Services.Data.Interfaces;
 using LibraryManagementApplication.ViewModels;
@@ -11,12 +12,14 @@ namespace LibraryManagementApplication.Services.Data
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly ILendingRecordRepository _lendingRecordRepository;
         private readonly IMapper _mapper;
 
-        public BookService(IBookRepository repository, IMapper mapper)
+        public BookService(IBookRepository repository, IMapper mapper, ILendingRecordRepository lendingRecordRepository)
         {
             _bookRepository = repository;
             _mapper = mapper;
+            _lendingRecordRepository = lendingRecordRepository;
         }
 
         public void AddBook(Book book)
@@ -42,6 +45,20 @@ namespace LibraryManagementApplication.Services.Data
                 .Include(b => b.Author)
                 .Include(b => b.Genre)
                 .ToListAsync();
+
+            var allRecords = await _lendingRecordRepository.GetAllAsync();
+
+            var lentOutBookIds = allRecords
+                .Where(r => r.ReturnDate == null)
+                .Select(r => r.BookId)
+                .Distinct()
+                .ToList();
+
+            foreach (var book in books)
+            {
+                book.AvailabilityStatus = !lentOutBookIds.Contains(book.BookId);
+            }
+
             return _mapper.Map<IEnumerable<BookViewModel>>(books);
         }
 

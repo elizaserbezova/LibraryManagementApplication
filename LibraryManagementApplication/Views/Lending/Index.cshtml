@@ -1,0 +1,26 @@
+﻿@model IEnumerable<LentBookViewModel>
+
+<h2>My Books</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Return</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.BookTitle</td>
+                <td>
+                    <form asp-action="Return" method="post">
+                        <input type="hidden" name="lendingRecordId" value="@book.LendingRecordId" />
+                        <button type="submit" class="btn btn-sm btn-danger">Return</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

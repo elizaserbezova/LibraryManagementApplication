@@ -15,7 +15,11 @@ namespace LibraryManagementApplication.Services.Data
 
             CreateMap<BookViewModel, Book>()
                 .ForMember(b => b.Author, opt => opt.Ignore())
-                .ForMember(b => b.Genre, opt => opt.Ignore());
+                .ForMember(b => b.Genre, opt => opt.Ignore())
+                .ForMember(b => b.AvailabilityStatus, opt => opt.MapFrom(src => true));
+
+            CreateMap<LendingRecord, LentBookViewModel>()
+                .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title));
         }
     }
 }

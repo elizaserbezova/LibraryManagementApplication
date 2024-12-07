@@ -34,6 +34,6 @@ namespace LibraryManagementApplication.Data.Models
         public Genre Genre { get; set; } = null!;
 
         [Comment("Availability status of the book")]
-        public bool AvailabilityStatus { get; set; } = true; // Default to available
+        public bool AvailabilityStatus { get; set; } = true;
     }
 }

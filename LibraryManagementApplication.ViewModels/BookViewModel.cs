@@ -33,5 +33,9 @@ namespace LibraryManagementApplication.ViewModels
         public List<Genre> Genres { get; set; } = new List<Genre>();
 
         public bool AvailabilityStatus { get; set; }
+
+        public bool IsLentByUser { get; set; }
+
+        public int? LendingRecordId { get; set; }
     }
 }

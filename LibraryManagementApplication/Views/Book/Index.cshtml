@@ -5,15 +5,14 @@
 }
 
 <h2>Books</h2>
-
-<table class="table table-striped">
+<table class="table">
     <thead>
         <tr>
             <th>Title</th>
             <th>ISBN</th>
             <th>Author</th>
             <th>Genre</th>
-            <th>Availability</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -25,13 +24,35 @@
                 <td>@book.ISBN</td>
                 <td>@book.AuthorName</td>
                 <td>@book.GenreName</td>
-                <td>@(book.AvailabilityStatus ? "Available" : "Unavailable")</td>
+                <td>@(book.AvailabilityStatus ? "Available" : "Lent Out")</td>
                 <td>
-                    <a class="btn btn-primary btn-sm" href="@Url.Action("Details", "Book", new { id = book.BookId })">Details</a>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="btn btn-warning btn-sm" href="@Url.Action("Edit", "Book", new { id = book.BookId })">Edit</a>
-                        <a class="btn btn-danger btn-sm" href="@Url.Action("Delete", "Book", new { id = book.BookId })">Delete</a>
+                        <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@book.BookId">Details</a>
+                    }
+
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@book.BookId">Edit</a>
+                        <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@book.BookId">Delete</a>
+                    }
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (book.AvailabilityStatus && !book.IsLentByUser)
+                        {
+                            <form asp-action="Lend" method="post" style="display:inline;">
+                                <input type="hidden" name="bookId" value="@book.BookId" />
+                                <button type="submit" class="btn btn-sm btn-success">Lend</button>
+                            </form>
+                        }
+                        else if (!book.AvailabilityStatus && book.IsLentByUser)
+                        {
+                            <form asp-action="Return" asp-controller="Lending" method="post" style="display:inline;">
+                                <input type="hidden" name="lendingRecordId" value="@book.LendingRecordId" />
+                                <button type="submit" class="btn btn-sm btn-danger">Return</button>
+                            </form>
+                        }
                     }
                 </td>
             </tr>
