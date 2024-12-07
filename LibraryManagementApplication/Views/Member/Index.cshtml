@@ -1,0 +1,31 @@
+﻿@model IEnumerable<LibraryManagementApplication.Data.Models.Member>
+
+<h2>All Members</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>MemberId</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>ContactInfo</th>
+            <th>MembershipDate</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var member in Model)
+        {
+            <tr>
+                <td>@member.MemberId</td>
+                <td>@member.Name</td>
+                <td>@member.Email</td>
+                <td>@member.ContactInfo</td>
+                <td>@member.MembershipDate.ToShortDateString()</td>
+                <td>
+                    <a class="btn btn-sm btn-info" asp-action="Details" asp-route-id="@member.MemberId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
