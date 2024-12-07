@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementApplication.Data.Models
@@ -31,5 +33,12 @@ namespace LibraryManagementApplication.Data.Models
         [StringLength(15)]
         [Comment("The contact information of the member")]
         public string ContactInfo { get; set; } = null!;
+
+        [Required]
+        [Comment("The ID of the registered account")]
+        public string UserId { get; set; }
+
+        [ForeignKey(nameof(UserId))]
+        public IdentityUser User { get; set; } = null!;
     }
 }
