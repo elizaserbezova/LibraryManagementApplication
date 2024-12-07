@@ -53,6 +53,10 @@ namespace LibraryManagementApplication
             builder.Services.AddScoped<IMemberRepository, MemberRepository>();
             builder.Services.AddScoped<IMemberService, MemberService>();
 
+            // LENDING RECORD
+            builder.Services.AddScoped<ILendingRecordRepository,  LendingRecordRepository>();
+            builder.Services.AddScoped<ILendingService, LendingService>();
+
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             var app = builder.Build();

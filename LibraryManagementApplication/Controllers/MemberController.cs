@@ -26,7 +26,12 @@ namespace LibraryManagementApplication.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var member = await _memberService.GetMemberByIdAsync(id);
-            if (member == null) return NotFound();
+
+            if (member == null)
+            {
+                return NotFound();
+            }
+
             return View(member);
         }
     }
