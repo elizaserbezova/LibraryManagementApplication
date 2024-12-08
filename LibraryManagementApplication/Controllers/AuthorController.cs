@@ -94,9 +94,9 @@ namespace LibraryManagementApplication.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(int id)
+        public async Task<IActionResult> DeleteConfirmation(int AuthorId)
         {
-            await _authorService.DeleteAuthorAsync(id);
+            await _authorService.DeleteAuthorAsync(AuthorId);
             return RedirectToAction(nameof(Index));
         }
     }

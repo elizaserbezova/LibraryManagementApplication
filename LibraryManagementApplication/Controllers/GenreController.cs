@@ -115,9 +115,9 @@ namespace LibraryManagementApplication.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmation(int id)
+        public async Task<IActionResult> DeleteConfirmation(int GenreId)
         {
-            var result = await service.DeleteGenreAsync(id);
+            var result = await service.DeleteGenreAsync(GenreId);
 
             if (!result)
             {

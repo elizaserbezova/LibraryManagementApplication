@@ -22,7 +22,10 @@ namespace LibraryManagementApplication.Services.Data
                 .ForMember(dest => dest.BookTitle, opt => opt.MapFrom(src => src.Book.Title));
 
             CreateMap<Author, AuthorViewModel>();
+            CreateMap<AuthorViewModel, Author>();
+
             CreateMap<Genre, GenreViewModel>();
+            CreateMap<GenreViewModel, Genre>();
         }
     }
 }
