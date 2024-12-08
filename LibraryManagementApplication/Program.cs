@@ -74,6 +74,9 @@ namespace LibraryManagementApplication
                 app.UseHsts();
             }
 
+            // HANDLE ERRORS
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
