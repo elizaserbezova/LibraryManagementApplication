@@ -35,9 +35,9 @@ namespace LibraryManagementApplication.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search = null)
         {
-            var books = await _bookService.GetAllBooksAsync();
+            var books = await _bookService.GetAllBooksAsync(search);
 
             if (User.Identity.IsAuthenticated)
             {

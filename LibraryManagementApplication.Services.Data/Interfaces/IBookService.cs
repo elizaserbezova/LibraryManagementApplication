@@ -6,7 +6,7 @@ namespace LibraryManagementApplication.Services.Data.Interfaces
     public interface IBookService
     {
         IEnumerable<Book> GetAllBooks();
-        Task<IEnumerable<BookViewModel>> GetAllBooksAsync();
+        Task<IEnumerable<BookViewModel>> GetAllBooksAsync(string? search = null);
         Book GetBookById(int id);
         Task<BookViewModel?> GetBookByIdAsync(int id);
         void AddBook(Book book);

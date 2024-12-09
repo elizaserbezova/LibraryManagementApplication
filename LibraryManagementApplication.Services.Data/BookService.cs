@@ -6,6 +6,7 @@ using LibraryManagementApplication.Data.Repository.Interfaces;
 using LibraryManagementApplication.Services.Data.Interfaces;
 using LibraryManagementApplication.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace LibraryManagementApplication.Services.Data
 {
@@ -38,28 +39,36 @@ namespace LibraryManagementApplication.Services.Data
             return _bookRepository.GetAll();
         }
 
-        public async Task<IEnumerable<BookViewModel>> GetAllBooksAsync()
+        public async Task<IEnumerable<BookViewModel>> GetAllBooksAsync(string? search = null)
         {
-            var books = await _bookRepository
+            var query = _bookRepository
                 .GetAllAsQuery()
                 .Include(b => b.Author)
                 .Include(b => b.Genre)
-                .ToListAsync();
+                .AsQueryable();
 
-            var allRecords = await _lendingRecordRepository.GetAllAsync();
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                query = query.Where(b => b.Title.Contains(search));
+            }
 
-            var lentOutBookIds = allRecords
+            var lentOutBookIds = await _lendingRecordRepository
+                .GetAllAsQuery()
                 .Where(r => r.ReturnDate == null)
                 .Select(r => r.BookId)
                 .Distinct()
-                .ToList();
+                .ToListAsync();
 
-            foreach (var book in books)
+            var books = await query.ToListAsync();
+
+            var bookViewModels = _mapper.Map<IEnumerable<BookViewModel>>(books);
+
+            foreach (var bookViewModel in bookViewModels)
             {
-                book.AvailabilityStatus = !lentOutBookIds.Contains(book.BookId);
+                bookViewModel.AvailabilityStatus = !lentOutBookIds.Contains(bookViewModel.BookId);
             }
 
-            return _mapper.Map<IEnumerable<BookViewModel>>(books);
+            return bookViewModels;
         }
 
         public Book GetBookById(int id)

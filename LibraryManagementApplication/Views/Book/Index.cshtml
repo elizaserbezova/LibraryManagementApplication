@@ -2,9 +2,20 @@
 
 @{
     ViewData["Title"] = "Books";
+    var currentSearchTerm = Context.Request.Query["search"].ToString();
 }
 
 <h2>Books</h2>
+
+<form method="get" asp-action="Index">
+    @Html.AntiForgeryToken()
+    <div class="input-group mb-3" style="max-width:300px;">
+        <input type="text" class="form-control" placeholder="Search by Title..."
+               name="search" value="@currentSearchTerm" />
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
