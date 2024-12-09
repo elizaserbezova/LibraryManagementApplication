@@ -48,7 +48,7 @@
                         <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@book.BookId">Delete</a>
                     }
 
-                    @if (User.Identity.IsAuthenticated)
+                    @if (User.Identity.IsAuthenticated && !User.IsInRole("Administrator"))
                     {
                         if (book.AvailabilityStatus && !book.IsLentByUser)
                         {
@@ -71,7 +71,7 @@
     </tbody>
 </table>
 
-@if (User.Identity.IsAuthenticated)
+@if (User.Identity.IsAuthenticated && User.IsInRole("Administrator"))
 {
     <a class="btn btn-success" href="@Url.Action("Create", "Book")">Add New Book</a>
 }

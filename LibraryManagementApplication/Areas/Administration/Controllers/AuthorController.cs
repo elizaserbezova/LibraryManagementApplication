@@ -5,8 +5,10 @@ using LibraryManagementApplication.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LibraryManagementApplication.Controllers
+namespace LibraryManagementApplication.Areas.Administration.Controllers
 {
+    [Area("Administration")]
+    [Authorize(Roles = "Administrator")]
     public class AuthorController : Controller
     {
         private readonly IAuthorService _authorService;

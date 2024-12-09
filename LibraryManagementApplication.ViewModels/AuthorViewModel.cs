@@ -15,7 +15,7 @@ namespace LibraryManagementApplication.ViewModels
         public int AuthorId { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(100, ErrorMessage = "The Author Name must be at most 100 characters.")]
         public string Name { get; set; } = null!;
 
         public string? Biography { get; set; }

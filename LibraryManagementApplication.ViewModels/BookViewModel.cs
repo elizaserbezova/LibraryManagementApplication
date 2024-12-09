@@ -10,9 +10,11 @@ namespace LibraryManagementApplication.ViewModels
         public int BookId { get; set; }
 
         [Required]
+        [StringLength(255, ErrorMessage = "The Title must be at most 255 characters.")]
         public string Title { get; set; } = null!;
 
         [Required]
+        [StringLength(13, ErrorMessage = "The ISBN must be at most 13 characters.")]
         public string ISBN { get; set; } = null!;
         public DateTime PublishDate { get; set; }
 

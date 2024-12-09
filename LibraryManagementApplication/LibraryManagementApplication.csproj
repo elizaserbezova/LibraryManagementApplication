@@ -29,4 +29,9 @@
     <ProjectReference Include="..\LibraryManagementApplication.ViewModels\LibraryManagementApplication.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administration\Data\" />
+    <Folder Include="Areas\Administration\Models\" />
+  </ItemGroup>
+
 </Project>
