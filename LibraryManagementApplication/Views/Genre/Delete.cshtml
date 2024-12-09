@@ -20,6 +20,7 @@
             <dd class="col-sm-8">@Model.Description</dd>
         </dl>
         <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
             <input type="hidden" asp-for="GenreId" />
             <input class="btn btn-danger w-100 py-2 fw-bold rounded" type="submit" value="Delete" />
         </form>

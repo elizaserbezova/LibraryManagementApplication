@@ -12,6 +12,7 @@
 <div class="row">
     <div class="col-lg-6 offset-lg-3">
         <form asp-action="DeleteConfirmation" method="post">
+            @Html.AntiForgeryToken()
             <input type="hidden" asp-for="AuthorId" />
             <p>Are you sure you want to delete <strong>@Model.Name</strong>?</p>
             <button type="submit" class="btn btn-danger">Delete</button>

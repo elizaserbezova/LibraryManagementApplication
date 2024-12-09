@@ -54,7 +54,7 @@ namespace LibraryManagementApplication.Controllers
             var author = await _authorService.GetAuthorByIdAsync(id);
             if (author == null)
             {
-                throw new ArgumentException("Author not found!");
+                return NotFound();
             }
 
             var viewModel = _mapper.Map<AuthorViewModel>(author);
@@ -67,7 +67,7 @@ namespace LibraryManagementApplication.Controllers
         {
             if (id != viewModel.AuthorId)
             {
-                throw new ArgumentException("Operation not allowed!");
+                return StatusCode(500);
             }
 
             if (ModelState.IsValid)

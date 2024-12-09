@@ -34,7 +34,7 @@ namespace LibraryManagementApplication.Controllers
 
             if (genre == null)
             {
-                throw new ArgumentException("Genre not found!");
+                return NotFound();
             }
             var viewModel = _mapper.Map<GenreViewModel>(genre);
             return View(viewModel);
@@ -69,7 +69,7 @@ namespace LibraryManagementApplication.Controllers
 
             if (genre == null)
             {
-                throw new ArgumentException("Genre not found!");
+                return NotFound();
             }
             var viewModel = _mapper.Map<GenreViewModel>(genre);
             return View(viewModel);
@@ -81,7 +81,7 @@ namespace LibraryManagementApplication.Controllers
         {
             if (id != genreViewModel.GenreId)
             {
-                throw new ArgumentException("Not allowed!");
+                return StatusCode(500);
             }
 
             if (ModelState.IsValid)
@@ -91,7 +91,7 @@ namespace LibraryManagementApplication.Controllers
 
                 if (!result)
                 {
-                    throw new ArgumentException("Genre was not updated!");
+                    return NotFound();
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -107,7 +107,7 @@ namespace LibraryManagementApplication.Controllers
 
             if (genre == null)
             {
-                throw new ArgumentException("Genre not found!");
+                return NotFound();
             }
             var viewModel = _mapper.Map<GenreViewModel>(genre);
             return View(viewModel);
@@ -121,7 +121,7 @@ namespace LibraryManagementApplication.Controllers
 
             if (!result)
             {
-                throw new ArgumentException("Genre not found!");
+                return NotFound();
             }
 
             return RedirectToAction(nameof(Index));

@@ -132,7 +132,7 @@ namespace LibraryManagementApplication.Controllers
             
             if (book == null)
             {
-                throw new ArgumentException("Book not found!");
+                return NotFound();
             }
 
             var authors = await _authorService.GetAllAuthorsAsync();
@@ -151,7 +151,7 @@ namespace LibraryManagementApplication.Controllers
         {
             if (id != bookViewModel.BookId)
             {
-                throw new ArgumentException("Invalid ID");
+                return StatusCode(500);
             }
 
             if (ModelState.IsValid)
@@ -159,7 +159,7 @@ namespace LibraryManagementApplication.Controllers
                 var result = await _bookService.UpdateBookAsync(bookViewModel);
                 if (!result)
                 {
-                    throw new ArgumentException("Book not found!");
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -185,7 +185,7 @@ namespace LibraryManagementApplication.Controllers
             var result = await _bookService.DeleteBookAsync(BookId);
             if (!result)
             {
-                throw new ArgumentException("Book not found!");
+                return NotFound();
             }
             return RedirectToAction(nameof(Index));
         }

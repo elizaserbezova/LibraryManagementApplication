@@ -12,6 +12,7 @@
 <div class="row">
     <div class="col-lg-6 offset-lg-3">
         <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
             <div class="mb-3">
                 <label asp-for="Name" class="form-label">Name</label>
                 <input asp-for="Name" class="form-control" />
