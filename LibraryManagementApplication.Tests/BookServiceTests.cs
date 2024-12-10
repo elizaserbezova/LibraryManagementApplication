@@ -24,7 +24,6 @@ namespace LibraryManagementApplication.Tests.Services
         [SetUp]
         public void Setup()
         {
-            // Configure InMemory Database
             _dbOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "LibraryManagementTestDb_Authors")
                 .Options;
