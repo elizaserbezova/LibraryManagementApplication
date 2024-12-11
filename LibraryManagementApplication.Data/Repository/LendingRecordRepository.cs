@@ -1,5 +1,6 @@
 ﻿using LibraryManagementApplication.Data.Models;
 using LibraryManagementApplication.Data.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace LibraryManagementApplication.Data.Repository
 {
@@ -11,7 +12,7 @@ namespace LibraryManagementApplication.Data.Repository
 
         public IQueryable<LendingRecord> GetAllAsQuery()
         {
-            return dbSet.AsQueryable();
+            return dbSet.AsNoTracking();
         }
     }
 }

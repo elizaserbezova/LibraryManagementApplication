@@ -89,15 +89,15 @@ namespace LibraryManagementApplication.Tests.Services
             Assert.AreEqual("New Book", book.Title);
         }
 
-        //[Test]
-        //public async Task GetAllBooksAsync_ShouldReturnAllBooks()
-        //{
-        //    var books = await _bookService.GetAllBooksAsync();
+        [Test]
+        public async Task GetAllBooks_ShouldReturnAllBooks()
+        {
+            var books = _bookService.GetAllBooks();
 
-        //    Assert.AreEqual(2, books.Count());
-        //    Assert.IsTrue(books.Any(b => b.Title == "Book 1"));
-        //    Assert.IsTrue(books.Any(b => b.Title == "Book 2"));
-        //}
+            Assert.AreEqual(2, books.Count());
+            Assert.IsTrue(books.Any(b => b.Title == "Book 1"));
+            Assert.IsTrue(books.Any(b => b.Title == "Book 2"));
+        }
 
         [Test]
         public async Task GetBookByIdAsync_ShouldReturnCorrectBook()
@@ -108,24 +108,18 @@ namespace LibraryManagementApplication.Tests.Services
             Assert.AreEqual("Book 1", book.Title);
         }
 
-        //[Test]
-        //public async Task UpdateBookAsync_ShouldUpdateBookSuccessfully()
-        //{
-        //    var bookViewModel = new BookViewModel
-        //    {
-        //        BookId = 1,
-        //        Title = "Updated Book",
-        //        ISBN = "1234567890",
-        //        AuthorId = 1,
-        //        GenreId = 1
-        //    };
+        [Test]
+        public async Task UpdateBookAsync_ShouldUpdateBookSuccessfully()
+        {
+            var book = _context.Books.FirstOrDefault(b => b.BookId == 1);
+            book.Title = "Updated Book";
 
-        //    var result = await _bookService.UpdateBookAsync(bookViewModel);
+            var result = _bookService.UpdateBook(book);
 
-        //    Assert.IsTrue(result);
-        //    var updatedBook = _context.Books.FirstOrDefault(b => b.BookId == 1);
-        //    Assert.AreEqual("Updated Book", updatedBook.Title);
-        //}
+            Assert.IsTrue(result);
+            var updatedBook = _context.Books.FirstOrDefault(b => b.BookId == 1);
+            Assert.AreEqual("Updated Book", updatedBook.Title);
+        }
 
         [Test]
         public async Task DeleteBookAsync_ShouldDeleteBookSuccessfully()

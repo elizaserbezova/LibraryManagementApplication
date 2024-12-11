@@ -99,7 +99,7 @@ namespace LibraryManagementApplication.Data.Repository
             catch (Exception ex)
             {
                 return false;
-            } 
+            }
         }
 
         public async Task<bool> UpdateAsync(TType item)

@@ -80,6 +80,7 @@ namespace LibraryManagementApplication.Services.Data
         {
             var book = await _bookRepository
                 .GetAllAsQuery()
+                .AsNoTracking()
                 .Include(b => b.Author)
                 .Include(b => b.Genre)
                 .FirstOrDefaultAsync(b => b.BookId == id);

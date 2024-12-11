@@ -41,7 +41,7 @@ namespace LibraryManagementApplication.Data.Repository
 
         public IQueryable<Book> GetAllAsQuery()
         {
-            return dbSet.AsQueryable();
+            return dbSet.AsNoTracking();
         }
     }
 }
